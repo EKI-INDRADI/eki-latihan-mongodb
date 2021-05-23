@@ -1,0 +1,34 @@
+CRUD operations & mongoDB
+
+application (code program)
+User -> <Code> - MongoDB Driver (create, Read, Update, Delete) -> MongoDB Server 
+
+Analysis / BI Tools
+BI Connector / Shell (read) -> MongoDB Server 
+
+Admin
+Shell  (create, Read, Update, Delete) -> MongoDB Server 
+
+
+
+
+
+ CRUD Operations
+
+ penjelasan CRUD (pada umumnya)
+
+ Create 
+ - insertOne(data, options)
+ - insertMany(data, options)
+
+ Read
+ - find(filter, options)
+ - findOne(filter, options)
+
+ Update
+ - updateOne(filter, data, options)
+ - updateMany(filter, data, options)
+
+ Delete
+ - deleteOne(filter, options)
+ - deleteMany(filter, options)

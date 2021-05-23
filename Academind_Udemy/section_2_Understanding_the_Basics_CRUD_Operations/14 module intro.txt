@@ -1,0 +1,4 @@
+Document & CRUD Basics
+basic about colletion document
+basic data types
+performing crud operations

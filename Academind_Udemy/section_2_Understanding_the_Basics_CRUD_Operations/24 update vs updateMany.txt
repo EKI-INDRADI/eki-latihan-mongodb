@@ -1,0 +1,469 @@
+
+
+
+
+
+
+
+db.flightData.update(
+{ _id : ObjectId("60a9ed9c785dfc0abb00a948")}, 
+{$set :{ delayed : true}}
+) 
+
+-----
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+-----
+
+
+
+db.flightData.update(
+{ _id : ObjectId("60a9ed9c785dfc0abb00a948")}, 
+{$set :{ delayed : false}}
+) 
+
+-----
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+-----
+
+
+
+
+db.flightData.updateOne(
+{ _id : ObjectId("60a9ed9c785dfc0abb00a948")}, 
+{ delayed : false}
+) 
+-----
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+-----
+
+
+db.flightData.updateMany(
+{ _id : ObjectId("60a9ed9c785dfc0abb00a948")}, 
+{ delayed : false}
+) 
+-----
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateMany@src/mongo/shell/crud_api.js:655:19
+@(shell):1:1
+-----
+
+
+
+db.flightData.update(
+{ _id : ObjectId("60a9ed9c785dfc0abb00a948")}, 
+{ delayed : false}
+) 
+-----
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+-----
+
+
+
+
+
+
+
+
+db.flightData.find().pretty()
+-----
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete"
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : false }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+-----
+Note : hanya muncul data yang komplit / valid
+
+
+
+
+
+db.flightData.find() 
+-----
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{ "_id" : ObjectId("60a8a81649a1bc5175df867c"), "departureAirport" : "MUC", "arrivalAirport" : "SF0", "aircraft" : "Airbus A388", "distance" : 12000, "intercontinental" : true, "marker" : "toDelete" }
+{ "_id" : "txl-lhr-1", "departureAirport" : "LHR", "arrivalAirport" : "TXL", "aircraft" : "Airbus A320", "distance" : 950, "intercontinental" : false, "marker" : "toDelete" }
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : false }
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a949"), "departureAirport" : "LHR", "arrivalAirport" : "TXL", "aircraft" : "Airbus A320", "distance" : 950, "intercontinental" : false }
+-----
+Note : data yang gak lengkap ikut muncul
+
+
+
+db.flightData.update({condition})
+karena kondisi di atas data di bawah ini jadi ilang :
+----------
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+----------
+Note : jika updatenya cuma beberapa key / object 
+doang ya yg di update itu doang , object yg lainnya hilang
+(kalo printah update wajib di isi semua  key/object nya 
+biar data yang lama gak keapus)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+================= PERBEDAAN $SET DAN TANPA $SET
+
+data sebelumnya :
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete"
+}
+
+
+db.flightData.update(
+{ _id : ObjectId("60a8a81649a1bc5175df867c")}, 
+{$set :{ delayed : false}}
+) 
+------------
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+------------
+
+
+
+db.flightData.find().pretty()
+------------
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : false }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+------------
+Note  : Jika menggunakan $SET = Partial Update 
+( hanya update sebagian saja, object lainnya tidak hilang)
+
+
+
+
+
+
+
+
+db.flightData.update(
+{ _id : ObjectId("60a8a81649a1bc5175df867c")}, 
+{ delayed : true}
+) 
+----------
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+----------
+
+
+
+
+db.flightData.find().pretty()
+----------
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{ "_id" : ObjectId("60a8a81649a1bc5175df867c"), "delayed" : true }
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : true }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+----------
+Note  : Jika TANPA $SET = FULL UPDATE 
+(selain object yang di update akan hilang)
+
+
+
+
+Update $SET Vs Update tanpa $SET
+= Partial update VS Full update
+
+
+================= /PERBEDAAN $SET DAN TANPA $SET
+
+
+================= REPLACE
+
+db.flightData.replaceOne(
+{ _id : ObjectId("60a8a81649a1bc5175df867c")}, 
+  {
+    "departureAirport": "MUC",
+    "arrivalAirport": "SFO",
+    "aircraft": "Airbus A380",
+    "distance": 12000,
+    "intercontinental": true,
+    "marker" : "toDelete",
+    "delayed" : false
+  }
+) 
+------
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+------
+
+
+
+db.flightData.find().pretty()
+------
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : true }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+------
+
+
+
+
+
+
+
+
+
+db.flightData.replaceOne(
+{ _id : ObjectId("60a8a68f49a1bc5175df867b")}, 
+  {
+    "departureAirport": "MUC",
+    "arrivalAirport": "SFO",
+    "aircraft": "Airbus A380",
+    "distance": 12000,
+    "intercontinental": true
+  }
+) 
+-----
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+-----
+
+
+
+
+
+
+db.flightData.find().pretty()
+------
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : true }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+------
+
+
+
+
+
+
+
+
+
+
+================= /REPLACE
+
+
+
+
+
+================  UPDATE ONE $SET
+db.flightData.updateOne(
+{ _id : ObjectId("60a8a68f49a1bc5175df867b")}, 
+{$set :{ delayed : true}}
+) 
+------
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+-----
+
+
+
+
+
+
+db.flightData.find().pretty()
+------
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : true }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+------
+
+Note : perintah update one dengan $ set sama seperti update perbedaannya
+update ini hanya mengupdate 1 data berdasarkan sort teratas
+
+perintah updateOne wajib pakai $set jika tidak error
+================ / UPDATE ONE  $SET
+
+
+================  UPDATE Many $SET
+db.flightData.updateMany(
+{ _id : ObjectId("60a8a68f49a1bc5175df867b")}, 
+{$set :{ delayed : true}}
+) 
+
+Note : perintah update many akan error jika tanpa set
+
+================  UPDATE Many $SET
+
+

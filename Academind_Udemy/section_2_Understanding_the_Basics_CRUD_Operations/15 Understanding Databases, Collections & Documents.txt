@@ -1,0 +1,11 @@
+Database
+- Collection (Tabel)
+- Document (row/record)
+
+jalankan service mongodb / mongod
+
+defaultnya port 27017
+
+spesifik port
+sudo mongod --port 27017
+sudo mongod --port 27018

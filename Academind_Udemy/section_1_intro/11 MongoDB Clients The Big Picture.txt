@@ -1,0 +1,3 @@
+cuma teori 
+
+server -> storage enggine -> memory -> driver -> code

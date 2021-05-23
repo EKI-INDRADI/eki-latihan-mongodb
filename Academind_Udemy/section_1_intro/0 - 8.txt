@@ -1,0 +1,162 @@
+------------------------------------------------
+4
+mongodb tidak memiliki skema 
+mongodb fleksibel (bebas input,dll)
+relational data need to mereged manually
+------------------------------------------------
+5
+Mongodb ecosystem
+
+self managed / Enterprise           atlas(cloud)   Mobile
+couldmanager / opsiManager
+compass
+BI connectors
+MongoDB Charts
+------------------------------------------------
+6
+Installing mongoimport
+In the next lecture, we install MongoDB.
+
+Generally, that works as shown but one tool needs to be installed separately now: mongoimport https://docs.mongodb.com/database-tools/mongoimport/#installation
+
+This ensures that you'll be able to run the mongoimport command throughout the course.
+------------------------------------------------
+7.
+https://stackoverflow.com/questions/15053893/mongod-command-not-recognized-when-trying-to-connect-to-a-mongodb-server/41507803
+
+
+file2 service , seperti mongoexport mongoimport, dll
+C:\Program Files\MongoDB\Server\4.4\bin
+
+buat folder  
+<bebas>/data/db
+contoh:
+
+D:\_eki-latihan-mongodb\Ace_Academy_Udemy\data
+
+
+buka cmd/terminal
+
+D:
+cd D:\_eki-latihan-mongodb\Ace_Academy_Udemy\data
+
+
+
+
+jika mongo service di terminal tdk ada
+edit di file .bash_profile   atau .bash di linux
+
+
+export PATH=/<directory>/mongo
+
+
+cth
+C:\Program Files\MongoDB\Server\4.4\bin
+
+kalo di iwndows di setnya di environtment variable
+cth :
+search > "edit evironment variable for your account"
+kelik 2x Path
+new
+tambahkan : C:\Program Files\MongoDB\Server\4.4\bin
+
+coba jalankan lagi di terminal
+mongod atau mongo
+
+
+======================mongod (service mongodb) untuk setting data folder dari database mongodb
+
+windows cmd
+mongod
+net stop mongodb
+net start mongodb
+
+Mac
+mongod
+
+linux
+sudo mongod
+
+
+ketika menjalankan mongodb (service mongodb)
+dia akan mengecek di folder root atau C windows ada folder /data/db atau tidak
+
+
+jika menjalankan mongod sudah ada folder pada
+C:\data\db
+
+maka data tersebut akan terisi
+
+
+atau
+
+cara manual
+
+dengan cara
+
+di mac :
+mongod --dbpath "/data/db"
+
+di windows :
+mongod --dbpath "C:\data\db"
+atau
+mongod --dbpath "D:\_eki-latihan-mongodb\Ace_Academy_Udemy\data\db"
+
+defaultnya 
+mongod --dbpath "C:\Program Files\MongoDB\Server\4.4\data"
+
+di linux :
+sudo mongod --dbpath "/data/db"
+
+
+======================/ mongod untuk setting data folder dari database mongodb
+
+
+
+====================== mongo untuk masuk pada konsole mongodb
+mongo
+
+masuk untuk melakukan query nosql
+====================== /mongo untuk masuk pada konsole mongodb
+
+------------------------------------------------
+8
+
+MongoDB Installation FAQ + Support
+PLEASE READ!
+
+IMPORTANT - For macOS Catalina Users
+
+If you're on macOS Catalina, there has been a hidden change in the operating system. You're NOT able to use /data/db as a database folder anymore. Instead, you have to use a non-root path (e.g. ~/data/db).
+
+Everything should go smooth when installing MongoDB but if you're facing any issues, here are a couple of helpful hints + resources that should help you.
+
+1) Check the Official Docs
+
+It sounds cheap but the official docs are really good. If you're facing any issues or you're not sure about some step, check the official installation guide for your operating system and make sure you follow the instructions step-by-step.
+
+Windows => https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
+macOS => https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+
+Linux => https://docs.mongodb.com/manual/administration/install-on-linux/
+
+2) The Database Path
+
+MongoDB needs to store your database data somewhere - and it does so in real files. On Windows, these files are stored in a path which you define during installation (for the Windows service).
+
+On macOS and Linux, MongoDB by default uses /data/db as the storage path. It also assumes a similar path (C:\data\db) on Windows when NOT using the MongoDB service (i.e. when manually executing the mongod command).
+
+You can always change the path by running:
+
+mongod --dbpath "my/new/path" (on Windows, use backslashes + the drive name => mongod --dbpath "C:\my\path").
+
+3) Permissions
+
+Make sure that MongoDB is allowed to write to the path you specified. If you're getting any permission errors, try running
+
+sudo mongod
+
+on macOS and Linux.
+
+On Windows, run the command prompt as administrator (right click on the command prompt executable => "Run as administrator").

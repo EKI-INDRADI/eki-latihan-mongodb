@@ -1,0 +1,287 @@
+db.passengers.find({name: "Albert Twostone"}).pretty()
+-------
+{
+        "_id" : ObjectId("60aa4bc5f2b92905a375d552"),
+        "name" : "Albert Twostone",
+        "age" : 68,
+        "hobbies" : [
+                "sports",
+                "cooking"
+        ]
+}
+-------
+
+db.passengers.find({name: "Albert Twostone"}).hobbies  // not work
+db.passengers.findOne({name: "Albert Twostone"}).hobbies
+-------
+[ "sports", "cooking" ]
+------
+
+
+
+db.passengers.find({hobbies: "sports"}).pretty()
+-----
+{
+        "_id" : ObjectId("60aa4bc5f2b92905a375d552"),
+        "name" : "Albert Twostone",
+        "age" : 68,
+        "hobbies" : [
+                "sports",
+                "cooking"
+        ]
+}
+-----
+
+
+
+
+
+
+
+
+db.flightData.find().pretty()
+-----
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete",
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+-----
+
+
+
+db.flightData.find({"status.description" : "on-time"}).pretty()
+-----
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete",
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+-----
+
+
+
+
+
+
+
+
+
+db.flightData.find({"status.details.responsible" : "Eki Indradi"}).pretty()
+-----
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete",
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+-----

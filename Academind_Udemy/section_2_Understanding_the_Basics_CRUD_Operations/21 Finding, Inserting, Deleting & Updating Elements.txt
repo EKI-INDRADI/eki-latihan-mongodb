@@ -1,0 +1,151 @@
+
+========================== FIND ============================
+
+db.flightData.find()
+
+db.flightData.find().pretty()
+
+----
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b") }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+{
+        "_id" : ObjectId("60a8acca49a1bc5175df867d"),
+        "arrivalAirport" : "TXL",
+        "departureAirport" : "LHR"
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+---
+========================== /FIND ============================
+
+========================== DELETE ============================
+
+db.flightData.deleteOne({_id : "60a8acca49a1bc5175df867d"})
+atau
+db.flightData.deleteOne({arrivalAirport : "TXL"})
+---
+{ "acknowledged" : true, "deletedCount" : 1 }
+---
+
+ db.flightData.find().pretty()
+ ---
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b") }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+---
+
+
+db.flightData.deleteMany()
+---
+uncaught exception: Error: find() requires query criteria :
+Bulk/this.find@src/mongo/shell/bulk_api.js:796:23
+DBCollection.prototype.deleteMany@src/mongo/shell/crud_api.js:420:20
+@(shell):1:1
+---
+
+Note : butuh kondisi
+
+contoh :
+db.flightData.deleteMany()
+
+=========== jangan di pake karena nanti data akan hilang sesuai kondisi 
+db.flightData.deleteMany({arrivalAirport : "TXL"}) 
+ // semua data yg memiliki value yang sama akan di hapus
+=========== /jangan di pake karena nanti data akan hilang sesuai kondisi 
+
+
+
+
+
+
+========================== /DELETE ============================
+
+
+========================== UPDATE ============================
+
+db.flightData.updateOne({distance : 12000},{marker : 'delete'})
+atau
+db.flightData.updateOne({distance : 12000},{marker : "delete"})
+---
+uncaught exception: Error: the update operation document must contain atomic operators :
+DBCollection.prototype.updateOne@src/mongo/shell/crud_api.js:565:19
+@(shell):1:1
+---
+
+Note : error format update
+
+seharusnya  pake  {$set : { }}  :
+
+db.flightData.updateOne({distance : 12000}, {$set : {marker : 'delete'}})
+atau
+db.flightData.updateOne({distance : 12000},{$set : {marker : "delete"}})
+---
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+---
+
+
+
+
+db.flightData.updateMany({},{$set : {marker : "toDelete"}})
+---
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 3 }
+---
+
+
+
+db.flightData.find().pretty()
+---
+{ "_id" : ObjectId("60a8a68f49a1bc5175df867b"), "marker" : "toDelete" }
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete"
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+---
+
+atau pada mongo versi 3.x itu bisa langsung 
+db.flightData.updateMany({marker : "toDelete"})
+tapi versi 4 wajib kondisi
+
+
+========================== /UPDATE ============================

@@ -1,0 +1,56 @@
+-------------------
+terminal/cmd
+-------------------
+mongo   
+
+
+
+
+
+-------------------
+show dbs
+Note : menampilkan seluruh database
+-------------------
+EKI_INDRADI  0.000GB
+admin        0.000GB
+config       0.000GB
+local        0.000GB
+-------------------
+
+
+
+
+-------------------
+use shop
+Note : masuk pada database shop (jika tidak akan membuat database sendiri)
+-------------------
+switched to db shop
+
+-------------------
+db.products
+Note : cara membuat collections
+-------------------
+shop.products
+
+
+-------------------
+db.products
+Note : cara membuat collections
+-------------------
+shop.products
+
+
+
+
+
+db.products.insertOne({"name" : "eki"})    ok
+db.products.insertOne({name : "eki"})    ok (rekomended)
+db.products.insertOne({name : "eki", age: 26}) 
+db.products.insertOne({name : "eki books", price: 12.99}) 
+
+db.products.find()
+db.products.find().pretty()
+
+db.products.insertOne({name : "eki books2", price: 123.99}) 
+db.products.insertOne({name : "eki books3", price: 1223, description : "zzzasdas"}) 
+db.products.insertOne({name : "eki books4", price: 1223, description : "zzzasdas", details : {berat : "2 Kg", genre : "History"} }) 

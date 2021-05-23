@@ -1,0 +1,11 @@
+shell = commandline
+driver = penghubung code - server
+https://docs.mongodb.com/drivers/
+https://docs.mongodb.com/drivers/node/current/
+http://mongodb.github.io/node-mongodb-native/
+https://docs.mongodb.com/drivers/node/current/quick-start/
+
+di nodejs driver = dependency resmi nodejs 
+const { MongoClient } = require("mongodb");
+langsung menggunakan printal shell pada nodejs
+berbeda dengan mongoose < third party

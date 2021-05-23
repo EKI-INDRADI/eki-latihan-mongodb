@@ -1,0 +1,57 @@
+menjelaskan perbedaan JSON dan BSON
+
+JSON : Javascript Object Notation = 
+{ 
+    "name" : "eki" ,
+    "age" : 26
+}
+
+
+
+BSON :  = Binary Data
+
+
+
+
+perbedaan BSON dapat membuat 
+"_id" : ObjectId("dasdadasd") pada  objectnya
+di json ga bs
+
+ada data types pada BSON  number, Decimal,
+pada BSON  untuk data yg di input bebas
+
+cth :
+db.flightData.insertOne(
+    {
+        arrivalAirport: "TXL",
+        departureAirport: "LHR"
+    }
+)
+
+
+db.flightData.insertOne(
+    {
+        departureAirport: "LHR",
+        arrivalAirport: "TXL",
+        aircraft: "Airbus A320",
+        distance: 950,
+        intercontinental: false,
+        _id : "txl-lhr-1"
+    }
+)
+
+
+
+tetapi pada JSON untuk data yg di input hrs sama
+
+BSON (mongodb) akan mengecek _id  
+jika ada id sama maka data 
+tidak dapat di input udah auto primary key
+
+
+WriteError@src/mongo/shell/bulk_api.js:458:48
+mergeBatchResults@src/mongo/shell/bulk_api.js:855:49
+executeBatch@src/mongo/shell/bulk_api.js:919:13
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1163:21
+DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:264:9
+@(shell):1:1

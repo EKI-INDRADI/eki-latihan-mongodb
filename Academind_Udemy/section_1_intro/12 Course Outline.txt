@@ -1,0 +1,22 @@
+intro 
+basic & Basic Crud 
+Data Schema & Relations
+Work with the shell
+Using Compass
+CRUD Deep Dive - Create
+Crud Deep Dive - Read
+Crud Deep Dive - Update
+Crud Deep Dive - delete
+using indexes
+
+...
+dst
+
+
+
+intnya menjelaskan
+
+tahap nubi
+tahap intermediate
+tahap pro
+

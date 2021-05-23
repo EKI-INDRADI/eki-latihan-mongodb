@@ -1,0 +1,7 @@
+embedded documents ini menjelaskan sub object dan array dari BSON , 
+mongodb dapat melakukannya hinnga 100 level sub / array pada documents,
+penyimpanan file max 16 mb /documents
+
+
+menjelaskan bahwa documents dapat membuat array bersarang hingga 100 level dan 
+penyimoanan file max 16 mb / documents

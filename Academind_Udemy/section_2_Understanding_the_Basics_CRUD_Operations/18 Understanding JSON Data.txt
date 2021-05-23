@@ -1,0 +1,21 @@
+menejelaskan
+
+Name/Key : value
+
+
+coba input
+
+db.flightData.insertOne(
+    {
+        "departureAirport": "MUC",
+        "arrivalAirport": "SF0",
+        "aircraft": "Airbus A388",
+        "distance": 12000,
+        "intercontinental": true
+    }
+)
+
+menjelaskan uniqe id (objectId)
+db.flightData.find() (yg kosong kliatan + brantakan)
+db.flightData.find().pretty()     (yg kosong ga kliatan)
+

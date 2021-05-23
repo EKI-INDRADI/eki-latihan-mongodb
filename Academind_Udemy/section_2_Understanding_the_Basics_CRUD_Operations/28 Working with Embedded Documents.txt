@@ -1,0 +1,246 @@
+db.flightData.find().pretty()
+-------
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{ "_id" : ObjectId("60a9ed9c785dfc0abb00a948"), "delayed" : true }
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+-------
+
+
+
+========================================= SUB OBJECT / embedded documents
+
+Contoh insert sub object :
+
+db.flightData.updateMany({},
+{
+    $set : {status : { 
+        description : "on-time",
+        lastUpdated : "1 hour ago" 
+        } }
+})
+-------
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+-------
+
+
+
+db.flightData.find().pretty()
+-------
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago"
+        }
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago"
+        }
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete",
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago"
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago"
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago"
+        }
+}
+-------
+
+
+
+
+
+
+
+
+
+db.flightData.updateMany({},
+    {  
+        $set : {
+                 status : { 
+                            description : "on-time",
+                            lastUpdated : "1 hour ago",
+                            details : {
+                                 responsible : "Eki Indradi" 
+
+                            }
+                        
+                 }
+       }
+    }
+)
+-------
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+-------
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.flightData.find().pretty()
+-------
+{
+        "_id" : ObjectId("60a8a68f49a1bc5175df867b"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete",
+        "delayed" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete",
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "delayed" : true,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "status" : {
+                "description" : "on-time",
+                "lastUpdated" : "1 hour ago",
+                "details" : {
+                        "responsible" : "Eki Indradi"
+                }
+        }
+}
+-------
+
+========================================= / SUB OBJECT / embedded documents
+
+
+========================================= SUB OBJECT

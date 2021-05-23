@@ -1,0 +1,72 @@
+db.flightData.find().pretty()
+
+
+db.flightData.find({ name : "Eki"})
+
+db.flightData.find({ intercontinental : true }).pretty()
+-------
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete"
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+-------
+db.flightData.find({  distance : 12000 }).pretty()
+
+
+db.flightData.find({  distance : {$gte : 10000} }).pretty()    // lebih besar   / grather thans
+
+db.flightData.find({  distance : {$gte : 900} }).pretty()  
+-------
+{
+        "_id" : ObjectId("60a8a81649a1bc5175df867c"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SF0",
+        "aircraft" : "Airbus A388",
+        "distance" : 12000,
+        "intercontinental" : true,
+        "marker" : "toDelete"
+}
+{
+        "_id" : "txl-lhr-1",
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false,
+        "marker" : "toDelete"
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a948"),
+        "departureAirport" : "MUC",
+        "arrivalAirport" : "SFO",
+        "aircraft" : "Airbus A380",
+        "distance" : 12000,
+        "intercontinental" : true
+}
+{
+        "_id" : ObjectId("60a9ed9c785dfc0abb00a949"),
+        "departureAirport" : "LHR",
+        "arrivalAirport" : "TXL",
+        "aircraft" : "Airbus A320",
+        "distance" : 950,
+        "intercontinental" : false
+}
+-------
+
+
+
+db.flightData.findOne({  distance : {$gte : 900} }).pretty()     // error
+db.flightData.findOne({  distance : {$gte : 900} })        //ok

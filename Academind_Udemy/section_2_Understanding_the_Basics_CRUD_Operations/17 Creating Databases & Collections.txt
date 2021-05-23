@@ -1,0 +1,16 @@
+menjelaskan create database dan collections
+seperti pada section 1
+
+use flights (create / gunakan database)
+
+show dbs (show database)
+
+db.flightData (create collection)
+db.flightData.insertOne({})
+
+
+menejlaskan seperti pada section 1
+database
+collection
+document
+

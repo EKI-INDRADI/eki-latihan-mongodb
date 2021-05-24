@@ -1,0 +1,328 @@
+======================= insert (ANSWER 1)
+
+
+db.patient.insertMany([
+            {
+                "fristName" : "Eki",
+                "lastName" : "Indradi",
+                "age" : 26,
+                "history" : [
+                    {"disease" : "A", "treatment" : "A", "medicine" : "A" },
+                    {"status" : "get well"}
+                ]
+            },
+            {
+                "fristName" : "Eki",
+                "lastName" : "Indradi 2",
+                "age" : 27,
+                "history" : [
+                          {"disease" : "B", "treatment" : "A", "medicine" : "A" },
+                          {"status" : "die"}
+                ]
+            },
+            {
+                "fristName" : "Eki",
+                "lastName" : "Indradi 3",
+                "age" : 28,
+                "history" : [
+                          {"disease" : "B", "treatment" : "B", "medicine" : "A" },
+                          {"status" : "recover"}
+                ]
+            },
+            {
+                "fristName" : "Eki",
+                "lastName" : "Indradi 3",
+                "age" : 28,
+                "history" : [
+                          {"disease" : "B", "treatment" : "B", "medicine" : "B" },
+                          {"status" : "get well"}
+                ]
+            },
+            {
+                "fristName" : "Eki",
+                "lastName" : "Indradi 4",
+                "age" : 29,
+                "history" : [
+                          {"disease" : "C", "treatment" : "C", "medicine" : "C" },
+                          {"status" : "get well"}
+                ]
+            }
+])
+
+------result
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("60ac0d0d39bb123981f86136"),
+                ObjectId("60ac0d0d39bb123981f86137"),
+                ObjectId("60ac0d0d39bb123981f86138"),
+                ObjectId("60ac0d0d39bb123981f86139"),
+                ObjectId("60ac0d0d39bb123981f8613a")
+        ]
+}
+------
+
+
+======================= /insert
+
+======================= update  (ANSWER 2)
+
+// partial update
+db.patient.updateOne(
+{ _id : ObjectId("60ac0d0d39bb123981f8613a")}, 
+{$set :{ fristName : "Eki update",  lastName : "Indradi 4 update"}}
+) 
+-----
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+-----
+
+
+                            db.patient.find({fristName : "Eki update"}).pretty()
+                            -----
+                            {
+                                    "_id" : ObjectId("60ac0d0d39bb123981f8613a"),
+                                    "fristName" : "Eki update",
+                                    "lastName" : "Indradi 4 update",
+                                    "age" : 29,
+                                    "history" : [
+                                            {
+                                                    "disease" : "C",
+                                                    "treatment" : "C",
+                                                    "medicine" : "C"
+                                            },
+                                            {
+                                                    "status" : "get well"
+                                            }
+                                    ]
+                            }
+                            -----
+
+
+
+
+// partial update
+db.patient.updateOne(
+{ _id : ObjectId("60ac0d0d39bb123981f8613a")}, 
+{$set :{ history : [
+       {"disease" : "C", "treatment" : "C", "medicine" : "C" },
+       { status : "die"}
+       ] 
+    }}
+) 
+-----
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+-----
+
+
+
+
+
+                            db.patient.find({fristName : "Eki update"}).pretty()
+                            -----
+                            {
+                                    "_id" : ObjectId("60ac0d0d39bb123981f8613a"),
+                                    "fristName" : "Eki update",
+                                    "lastName" : "Indradi 4 update",
+                                    "age" : 29,
+                                    "history" : [
+                                            {
+                                                    "disease" : "C",
+                                                    "treatment" : "C",
+                                                    "medicine" : "C"
+                                            },
+                                            {
+                                                    "status" : "die"
+                                            }
+                                    ]
+                            }
+                            ------
+
+
+// full update
+db.patient.update(
+{ _id : ObjectId("60ac0d0d39bb123981f8613a")}, 
+       { fristName : "Eki full update",  
+         lastName : "Indradi 4 full update" ,
+         age : 31,
+         history : [
+                    {"disease" : "D", "treatment" : "D", "medicine" : "D" },
+                    { status :  "get well"}
+         ] 
+    }
+)
+------
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+------
+
+
+                            db.patient.find({ _id : ObjectId("60ac0d0d39bb123981f8613a")}).pretty()
+                            ------
+                            {
+                                    "_id" : ObjectId("60ac0d0d39bb123981f8613a"),
+                                    "fristName" : "Eki full update",
+                                    "lastName" : "Indradi 4 full update",
+                                    "age" : 31,
+                                    "history" : [
+                                            {
+                                                    "disease" : "D",
+                                                    "treatment" : "D",
+                                                    "medicine" : "D"
+                                            },
+                                            {
+                                                    "status" : "get well"
+                                            }
+                                    ]
+                            }
+                            ------
+
+
+
+======================= /update
+
+======================= find (ANSWER 3)
+
+// {  age : {$gte : 30} } as AGE >= 30
+
+db.patient.find({  age : {$gte : 31} }).pretty() 
+
+
+db.patient.find({  age : {$gte : 30} }).pretty()   
+-------
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f8613a"),
+        "fristName" : "Eki full update",
+        "lastName" : "Indradi 4 full update",
+        "age" : 31,
+        "history" : [
+                {
+                        "disease" : "D",
+                        "treatment" : "D",
+                        "medicine" : "D"
+                },
+                {
+                        "status" : "get well"
+                }
+        ]
+}
+-------
+
+
+======================= /find 
+
+
+======================= delete (ANSWER 4)
+// db.patient.deleteMany({ history : [ {disease : "A"}  ]})
+// --------
+// { "acknowledged" : true, "deletedCount" : 0 }
+// --------
+
+//db.patient.find({ history : [{disease : "A"}]} ).pretty()
+//db.patient.find({ history : [{ $in: {disease : "A"} }]} ).pretty()
+
+// fillter condition delete 
+// history : [ {disease : "A"} ]    
+// i dont known
+
+db.patient.find({  _id : ObjectId("60ac0d0d39bb123981f86136") }).pretty()
+db.patient.find({  age : {$lte : 26} }).pretty()
+--------
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f86136"),
+        "fristName" : "Eki",
+        "lastName" : "Indradi",
+        "age" : 26,
+        "history" : [
+                {
+                        "disease" : "A",
+                        "treatment" : "A",
+                        "medicine" : "A"
+                },
+                {
+                        "status" : "get well"
+                }
+        ]
+}
+--------
+
+
+db.patient.deleteMany({  _id : ObjectId("60ac0d0d39bb123981f86136") })
+-------
+{ "acknowledged" : true, "deletedCount" : 1 }
+-------
+
+
+db.patient.find({  age : {$lte : 26} }).pretty()
+--------
+--------
+
+======================= /delete
+
+
+
+db.patient.find().pretty()
+-------
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f86137"),
+        "fristName" : "Eki",
+        "lastName" : "Indradi 2",
+        "age" : 27,
+        "history" : [
+                {
+                        "disease" : "B",
+                        "treatment" : "A",
+                        "medicine" : "A"
+                },
+                {
+                        "status" : "die"
+                }
+        ]
+}
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f86138"),
+        "fristName" : "Eki",
+        "lastName" : "Indradi 3",
+        "age" : 28,
+        "history" : [
+                {
+                        "disease" : "B",
+                        "treatment" : "B",
+                        "medicine" : "A"
+                },
+                {
+                        "status" : "recover"
+                }
+        ]
+}
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f86139"),
+        "fristName" : "Eki",
+        "lastName" : "Indradi 3",
+        "age" : 28,
+        "history" : [
+                {
+                        "disease" : "B",
+                        "treatment" : "B",
+                        "medicine" : "B"
+                },
+                {
+                        "status" : "get well"
+                }
+        ]
+}
+{
+        "_id" : ObjectId("60ac0d0d39bb123981f8613a"),
+        "fristName" : "Eki full update",
+        "lastName" : "Indradi 4 full update",
+        "age" : 31,
+        "history" : [
+                {
+                        "disease" : "D",
+                        "treatment" : "D",
+                        "medicine" : "D"
+                },
+                {
+                        "status" : "get well"
+                }
+        ]
+}
+-------

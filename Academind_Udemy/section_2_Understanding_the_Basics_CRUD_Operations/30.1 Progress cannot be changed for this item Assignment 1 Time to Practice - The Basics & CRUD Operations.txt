@@ -326,3 +326,26 @@ db.patient.find().pretty()
         ]
 }
 -------
+
+
+
+//========================= update jawaban instructor
+
+db.patient.insertOne({
+                "fristName" : "Eki",
+                "lastName" : "Indradi",
+                "age" : 26,
+                "history" : [
+                    {"disease" : "A", "treatment" : "A", "medicine" : "A" },
+                    {"status" : "get well"}
+                ]
+            })
+
+db.patient.deleteMany({"history.disease" : "A"})
+------
+{ "acknowledged" : true, "deletedCount" : 1 }
+------
+
+db.patient.find({"history.disease" : "A"})
+
+//========================= /update jawaban instructor

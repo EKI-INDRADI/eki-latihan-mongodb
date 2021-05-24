@@ -1,0 +1,6 @@
+menjelaskan tetang :
+
+Databases, collection, documents
+Cocuments structure
+Crud operations
+Retreving data

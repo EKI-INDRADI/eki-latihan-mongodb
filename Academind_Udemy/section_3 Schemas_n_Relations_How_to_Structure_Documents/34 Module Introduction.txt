@@ -1,0 +1,6 @@
+menjelaskan bagaimna menyesuaikan data schema dan data modeling
+
+
+document schema & data types
+modeling relations
+schema validation  = memvalidasi apakah data yg di simpan sesuai requirements

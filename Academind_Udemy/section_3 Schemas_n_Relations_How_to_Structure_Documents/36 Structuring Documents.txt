@@ -1,0 +1,112 @@
+penjelasan jika membutuhkan schema maka, 
+pastikan semua data yang di input sama
+
+
+========== dont
+products
+{
+    "title" : "Book",
+    "price" : 12.99
+}
+
+products
+{
+    "name" : "Bottle",
+    "available" :true
+}
+
+
+========== / dont
+
+
+========== ok
+
+products
+{
+    "title" : "Book",
+    "price" : 12.99
+}
+
+products
+{
+    "title" : "Bottle",
+    "price" : 5.99,
+    "available" :true
+}
+
+
+
+or
+
+
+
+----------- recomended
+products
+{
+    "title" : "Book",
+    "price" : 12.99
+}
+
+products
+{
+    "title" : "Bottle",
+    "price" : 5.99
+}
+----------- recomended
+
+========== /ok
+
+
+
+
+db.products.deleteMany({})
+
+
+------------- dont
+db.products.insertMany([
+{
+    "name" : "A book",
+    "price" : 12.99
+},
+{
+    "name" : "A T-Shirt",
+    "price" : 20.99
+},
+{
+    "name" : "A Computer",
+    "price" : 1299,
+    "details" : {
+        "cpu" : "Intel i7 8770"
+    }
+}
+])
+------------- dont
+db.products.deleteMany({})
+
+------------- recomended
+
+
+db.products.insertMany([
+{
+    "name" : "A book",
+    "price" : 12.99,
+    "details" : null
+},
+{
+    "name" : "A T-Shirt",
+    "price" : 20.99,
+    "details" : null
+},
+{
+    "name" : "A Computer",
+    "price" : 1299,
+    "details" : {
+        "cpu" : "Intel i7 8770"
+    }
+}
+])
+
+
+------------- recomended
+
+

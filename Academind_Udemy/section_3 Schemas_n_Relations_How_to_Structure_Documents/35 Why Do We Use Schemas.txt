@@ -1,1 +1,60 @@
-masih teori
+bukankah mongodb tidak membutuhkan schema ?
+mongodb tidak menggunakan schema apapun
+
+
+use shop
+db.products.insertOne({name: "A Book", price :12.99})
+
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60aeca783ed4d3daa8ac1929")
+}
+
+
+db.products.insertOne({title: "T-Shirt", seller: {name: "Max", age:29}})
+
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60aecadf3ed4d3daa8ac192a")
+}
+
+db.products.find().pretty()
+{
+        "_id" : ObjectId("60a896e5849396c71955b2b8"),
+        "name" : "eki books2",
+        "price" : 123.99
+}
+{
+        "_id" : ObjectId("60a89736849396c71955b2b9"),
+        "name" : "eki books3",
+        "price" : 1223,
+        "description" : "zzzasdas"
+}
+{
+        "_id" : ObjectId("60a897c0849396c71955b2ba"),
+        "name" : "eki books4",
+        "price" : 1223,
+        "description" : "zzzasdas",
+        "details" : {
+                "berat" : "2 Kg",
+                "genre" : "History"
+        }
+}
+{
+        "_id" : ObjectId("60aeca783ed4d3daa8ac1929"),
+        "name" : "A Book",
+        "price" : 12.99
+}
+{
+        "_id" : ObjectId("60aecadf3ed4d3daa8ac192a"),
+        "title" : "T-Shirt",
+        "seller" : {
+                "name" : "Max",
+                "age" : 29
+        }
+}
+
+
+
+----
+tetapi jika membutuhkan schema maka

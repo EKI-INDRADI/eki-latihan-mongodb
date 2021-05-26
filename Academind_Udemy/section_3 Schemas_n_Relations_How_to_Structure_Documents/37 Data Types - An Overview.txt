@@ -1,0 +1,16 @@
+Text : " "  (maximum chrackter total size 16mb untuk per document)
+boolean :  true / false 
+Number : 55 ( integer / int 32)
+Number : 10000000000  ( NumberLong / int 64)
+
+        ObjectId : ObjectId("asdasda") , Primariky / string generate , generatenya di ambil dari timestamp     
+        ISOdate : ISOdate("2018-09-09")
+        Embeded Document : { "o" : {...}}
+        Array =  { "a" : [ {...},{...}] }
+
+Number : 12.99 (Number Decimal)
+        Timestamp : timestamp(11421532)  , dapat dibuat otomatis
+        
+
+
+

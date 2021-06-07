@@ -1,1 +1,366 @@
 masih teori
+whow dbs        
+use test
+db.dropDatabase()
+
+usecompanyData
+
+ db.companies.deleteMany({})
+
+---------------------
+new Date() <<<< function nodejs driver
+new Timestamp()  <<<< function nodejs driver
+---------------------
+
+db.companies.insertOne(
+    {
+    nama: "FreshApples Inc", 
+    isStartup : true, 
+    employees : 33, 
+    funding : 123456789001234567890, 
+    details: {ceo: "Mark Super"}, 
+    tags: [{title: "super"}, {title:"perfect"}], 
+    foundingDate : new Date(),  
+    insertAt: new Timestamp()
+    }
+)
+---
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6085942b4a9980eef452")}
+---
+
+langsung insert aja
+
+dia akan berhasil
+
+
+
+
+db.companies.find().pretty()
+
+---
+{
+        "_id" : ObjectId("60bd6154942b4a9980eef453"),
+        "nama" : "FreshApples Inc",
+        "isStartup" : true,
+        "employees" : 33,
+        "funding" : 123456789001234560000,
+        "details" : {
+                "ceo" : "Mark Super"
+        },
+        "tags" : [
+                {
+                        "title" : "super"
+                },
+                {
+                        "title" : "perfect"
+                }
+        ],
+        "foundingDate" : ISODate("2021-06-06T23:59:16.935Z"),
+        "insertAt" : Timestamp(1623023956, 1)
+}
+---
+
+---------------------
+timestamp = bedasarkan milisecond
+ISODate = jadi toISOString
+
+hasilnya :
+"foundingDate" : ISODate("2021-06-06T23:49:24.984Z"),
+"insertAt" : Timestamp(1623023364, 1)
+
+
+PERBEDAAN : 
+
+============== KASUS
+
+resultnya :
+ "funding" : 123456789001234560000,  
+
+seharusnya :
+   funding : 123456789001234567890, 
+
+   Maximal 17 digit number, karena terlalu besar, 
+   nilai floating point 64bit yang tidak dapat di simpan
+
+di sarankan menggunakan string untuk meyimpannya
+
+============== KASUS
+
+---------------------
+
+
+
+
+
+
+==================== TEST number
+
+db.numbers.insertOne({a:1})
+db.numbers.findOne()
+
+db.stats()     <<<<< menampilakn data statistic database
+---
+{
+        "db" : "companyData",
+        "collections" : 2,
+        "views" : 0,
+        "objects" : 2,
+        "avgObjSize" : 133,
+        "dataSize" : 266,
+        "storageSize" : 57344,
+        "indexes" : 2,
+        "indexSize" : 57344,
+        "totalSize" : 114688,
+        "scaleFactor" : 1,
+        "fsUsedSize" : 54510809088,
+        "fsTotalSize" : 62659891200,
+        "ok" : 1
+}
+---
+
+
+db.companies2.insertOne(
+    {
+    nama: "FreshApples Inc", 
+    isStartup : true, 
+    employees : 33, 
+    funding : 12345678901234567890, 
+    details: {ceo: "Mark Super"}, 
+    tags: [{title: "super"}, {title:"perfect"}], 
+    foundingDate : new Date(),  
+    insertAt: new Timestamp()
+    }
+)
+---
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd63bf942b4a9980eef455")
+}
+---
+
+
+
+db.stats() 
+---
+{
+        "db" : "companyData",
+        "collections" : 3,
+        "views" : 0,
+        "objects" : 3,
+        "avgObjSize" : 166.33333333333334,
+        "dataSize" : 499,
+        "storageSize" : 77824,
+        "indexes" : 3,
+        "indexSize" : 77824,
+        "totalSize" : 155648,
+        "scaleFactor" : 1,
+        "fsUsedSize" : 54512889856,
+        "fsTotalSize" : 62659891200,
+        "ok" : 1
+}
+---
+
+db.numbers.deleteMany({})
+db.stats() 
+---
+{
+        "db" : "companyData",
+        "collections" : 3,
+        "views" : 0,
+        "objects" : 2,
+        "avgObjSize" : 233,
+        "dataSize" : 466,
+        "storageSize" : 81920,
+        "indexes" : 3,
+        "indexSize" : 81920,
+        "totalSize" : 163840,
+        "scaleFactor" : 1,
+        "fsUsedSize" : 54515286016,
+        "fsTotalSize" : 62659891200,
+        "ok" : 1
+}
+---
+
+
+
+
+
+
+
+db.numbers.insertOne({a: NumberInt(1)})
+---
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd65b1942b4a9980eef456")
+}
+---
+
+
+db.stats() 
+---
+{
+        "db" : "companyData",
+        "collections" : 3,
+        "views" : 0,
+        "objects" : 3,
+        "avgObjSize" : 165,
+        "dataSize" : 495,
+        "storageSize" : 81920,
+        "indexes" : 3,
+        "indexSize" : 81920,
+        "totalSize" : 163840,
+        "scaleFactor" : 1,
+        "fsUsedSize" : 54492016640,
+        "fsTotalSize" : 62659891200,
+        "ok" : 1
+}
+---
+
+
+Note : jika menggunakan spesitifik number dataSize pada db.stats() akan menyesuaikan
+contoh : jika  db.numbers.insertOne({a: NumberInt(1)}) , 
+
+maka dataSize pada database cuma akan menambah 29 saja (pada video), itulah mengapa Number dan NumberInt berbeda 
+NumberInt
+
+
+db.numbers.insertOne({a: NumberInt(12345678901234567890)}) <!--- akan di simpan sebagai integer  32
+vs 
+db.numbers.insertOne({a: 12345678901234567890})  <--- akan di simpan sebagai float 64 bit
+
+
+db.numbers.find().pretty()
+---
+{ "_id" : ObjectId("60bd65b1942b4a9980eef456"), "a" : 1 }
+{ "_id" : ObjectId("60bd66f5942b4a9980eef457"), "a" : -350287872 }       
+{ "_id" : ObjectId("60bd66f8942b4a9980eef458"), "a" : 12345678901234567000 }
+---
+
+
+typeof  db.numbers.findOne().a
+---
+number
+---
+
+Note : mengecek tipe data dari kolom
+
+https://docs.mongodb.com/manual/reference/bson-types/
+https://bsonspec.org/spec.html
+http://man.hubwiz.com/docset/MongoDB.docset/Contents/Resources/Documents/docs.mongodb.org/manual/reference/bson-types/index.html
+
+db.numbers.insertOne({a : NumberLong(12345678901234567890)}) <--- akan di simoan sebagai integer 64 (ERROR)
+---
+Error: number passed to NumberLong must be representable as an Long_t :
+@(shell):1:27
+---
+db.numbers.insertOne({a : NumberLong(parseInt(12345678901234567890))}) <--- akan di simoan sebagai integer 64  (ERROR)
+---
+uncaught exception: ReferenceError: b is not defined :
+@(shell):1:1
+---
+
+
+
+db.numbers.insertOne({a : NumberLong(123456789012345)}) <<<<---- OK
+---
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6bd5942b4a9980eef459")
+}
+---
+
+db.numbers.insertOne({a : NumberLong(1234567890123456)}) 
+---
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6c3b942b4a9980eef45a")
+}
+
+Note : NumberLong = cuma 16 digit , masih bisa di input tapi ntar value ngaco kyk di bawah
+
+---
+
+//================ RESULT MULAI GAK SESUAI =============
+
+ db.numbers.insertOne({a : NumberLong(12345678901234567)}) 
+{
+        "_id" : ObjectId("60bd6d6c942b4a9980eef45e"),
+        "a" : NumberLong("12345678901234568")
+}
+
+
+
+ db.numbers.insertOne({a : NumberLong(12345678901234567)}) 
+
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6c4d942b4a9980eef45b")
+}
+
+ db.numbers.insertOne({a : NumberLong(123456789012345678)}) 
+ --
+ {
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6c63942b4a9980eef45c")
+}
+
+ db.numbers.insertOne({a : NumberLong(1234567890123456789)}) 
+ {
+        "acknowledged" : true,
+        "insertedId" : ObjectId("60bd6c89942b4a9980eef45d")
+}
+
+//================ RESULT MULAI GAK SESUAI =============
+
+
+db.numbers.insertOne({a : NumberLong(12345678901234567890)}) 
+---
+Error: number passed to NumberLong must be representable as an int64_t : 
+@(shell):1:27
+---
+
+
+
+Note : NumberLong maximal 19 Digit
+---
+db.numbers.find().pretty()
+{ "_id" : ObjectId("60bd65b1942b4a9980eef456"), "a" : 1 }
+{ "_id" : ObjectId("60bd66f5942b4a9980eef457"), "a" : -350287872 }       
+{ "_id" : ObjectId("60bd66f8942b4a9980eef458"), "a" : 12345678901234567000 }
+{
+        "_id" : ObjectId("60bd6bd5942b4a9980eef459"),
+        "a" : NumberLong("123456789012345")
+}
+{
+        "_id" : ObjectId("60bd6c3b942b4a9980eef45a"),
+        "a" : NumberLong("1234567890123456")
+}
+{
+        "_id" : ObjectId("60bd6c4d942b4a9980eef45b"),
+        "a" : NumberLong("12345678901234568")
+}
+{
+        "_id" : ObjectId("60bd6c63942b4a9980eef45c"),
+        "a" : NumberLong("123456789012345680")
+}
+{
+        "_id" : ObjectId("60bd6c89942b4a9980eef45d"),
+        "a" : NumberLong("1234567890123456768")
+}
+{
+        "_id" : ObjectId("60bd6d6c942b4a9980eef45e"),
+        "a" : NumberLong("12345678901234568")
+}
+
+
+
+
+
+
+//======================== SOLVED ===========
+
+db.numbers.insertOne({a : "12345678901234567890"}) 
+
+//======================== SOLVED ===========

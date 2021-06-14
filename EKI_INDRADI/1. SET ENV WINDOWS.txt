@@ -1,0 +1,15 @@
+WINDOWS
+
+install mongodb server comunity = untuk mongo database server
+install mongodb database tools = untuk export mongodump dan import mongostore
+
+environment variable
+
+path > edit
+tambahkan
+C:\Program Files\MongoDB\Server\4.4\bin
+C:\Program Files\MongoDB\Tools\100\bin
+
+
+
+ 

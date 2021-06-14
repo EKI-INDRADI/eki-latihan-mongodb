@@ -1,0 +1,7 @@
+pada teori ini menjelaskan bagaimna menempakatan suato model dengan mongodb
+
+intinya berbeda dengan database relational yang harus memisahkan beberapa master tabel untuk di relasikan skema / model / table
+
+tetapi mongodb membuat suatu stuktur data berdasarkan gagasan/data untuk menjadi skema / model / table /collecttion dengan berdasarkan data yang di perlukan,
+walaupun ada cara membuat relasi pada mongodb, menggunakan id mongo.
+

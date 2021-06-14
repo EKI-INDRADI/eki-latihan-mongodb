@@ -1,0 +1,23 @@
+BACKUP : 
+
+contoh tanpa environment :
+cd C:\Program Files\MongoDB\Tools\100\bin\
+mongodump.exe -d EKI_INDRADI -o E:\
+mongodump.exe -d companyData  -o E:\
+mongodump.exe -d flights -o E:\
+mongodump.exe -d shop -o E:\
+
+atau
+contoh dengan environment :
+mongodump -d EKI_INDRADI -o E:\
+mongodump -d companyData  -o E:\
+mongodump -d flights -o E:\
+mongodump -d shop -o E:\
+
+restore
+
+contoh dengan environment :
+mongorestore -d EKI_INDRADI D:\_NOTE_BACKUP\mongodb_bk\EKI_INDRADI
+mongorestore -d companyData D:\_NOTE_BACKUP\mongodb_bk\companyData
+mongorestore -d flights D:\_NOTE_BACKUP\mongodb_bk\flights
+mongorestore -d shop D:\_NOTE_BACKUP\mongodb_bk\shop 

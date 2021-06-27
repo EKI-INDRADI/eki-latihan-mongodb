@@ -1,0 +1,21 @@
+STEPS TO SETUP MONGODB REPLICATIONS SET:
+1. prepare docker-compose.yml file => contains mongod --replSet "prototype" --keyFile "/data/keys/key"
+2. create SSL Key => openssl rand -base64 756 > <path-to-keyfile>
+3. set chmod => chmod 400 <path-to-keyfile>
+4. set chown => chown 999:999 <path-to-keyfile>
+5. copy SSL KEY to all servers
+ => FIRST SERVER!
+6. run mongob with docker and without --replSet and --keyFile
+7. create User in admin
+8. stop mongodb
+ALL SERVER!
+9. copy dockyer-compose.yml (step 1) to all server
+10. run mongodb with docker
+ => FIRST SERVER ONLY!
+11. Masuk container => sudo docker exec -it mongodb /bin/bash
+12. Masuk mongo => mongo
+13. Initiate RS => rs.initiate()
+14. fix conf for local RS => conf = rs.conf(); conf['members'][0]['host'] = "<YOUR_IP>:27017"; rs.reconfig(conf);
+15. RS ADD all other server => rs.add("<YOUR_IP>:27017")
+16. Remember to setup 1 Arbitary mongodb
+17. DONE! DONT FORGET TO UPDATE API

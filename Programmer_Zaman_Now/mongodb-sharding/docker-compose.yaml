@@ -1,0 +1,63 @@
+version: "3.5"
+
+services:
+
+  mongo-config-server1:
+    image: mongo:4.2
+    container_name: mongo-config-server1
+    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
+  mongo-config-server2:
+    image: mongo:4.2
+    container_name: mongo-config-server2
+    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
+  mongo-config-server3:
+    image: mongo:4.2
+    container_name: mongo-config-server3
+    command: mongod --configsvr --replSet rnd-config-replica-set --port 27019
+
+  mongo-first-shard1:
+    image: mongo:4.2
+    container_name: mongo-first-shard1
+    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
+  mongo-first-shard2:
+    image: mongo:4.2
+    container_name: mongo-first-shard2
+    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
+  mongo-first-shard3:
+    image: mongo:4.2
+    container_name: mongo-first-shard3
+    command: mongod --shardsvr --replSet rnd-first-shard-replica-set --port 27018
+
+  mongo-second-shard1:
+    image: mongo:4.2
+    container_name: mongo-second-shard1
+    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
+  mongo-second-shard2:
+    image: mongo:4.2
+    container_name: mongo-second-shard2
+    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
+  mongo-second-shard3:
+    image: mongo:4.2
+    container_name: mongo-second-shard3
+    command: mongod --shardsvr --replSet rnd-second-shard-replica-set --port 27018
+
+  mongo-third-shard1:
+    image: mongo:4.2
+    container_name: mongo-third-shard1
+    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
+  mongo-third-shard2:
+    image: mongo:4.2
+    container_name: mongo-third-shard2
+    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
+  mongo-third-shard3:
+    image: mongo:4.2
+    container_name: mongo-third-shard3
+    command: mongod --shardsvr --replSet rnd-third-shard-replica-set --port 27018
+
+  mongo-client:
+    image: mongo:4.2
+    container_name: mongo-client
+    command: mongos --configdb rnd-config-replica-set/mongo-config-server1:27019,mongo-config-server2:27019,mongo-config-server3:27019 --port 27017 --bind_ip_all
+    ports:
+      - 27017:27017
+
